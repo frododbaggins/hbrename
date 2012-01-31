@@ -7,7 +7,21 @@ int main(int argc, char ** argv)
 {
         char newname[NAMELEN]="", * argvptr=argv[1], * newnameptr = newname;
 
+	/* Skip leading hyphens */
+	while ( *argvptr && *argvptr == '-')
+	{
+		argvptr ++;
+	}
+	/* At this point, if argvptr points to '.', we have only hyphens in the filename,
+	 * followed by the extension. We do not want to modify such a name. Let us return it as it is
+	 */
+	if (*argvptr == '.')
+	{
+		printf("%s", argv[1]);
+		return -1;
+	}
 	strncpy(newname, argv[1], NAMELEN - 1);
+
 	while(*argvptr && *argvptr != '-')
 	{
 		*newnameptr++ = *argvptr++;
