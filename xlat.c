@@ -6,8 +6,8 @@
 int main(int argc, char ** argv)
 {
         char newname[NAMELEN]="", * argvptr=argv[1], * newnameptr = newname;
+
 	strncpy(newname, argv[1], NAMELEN - 1);
-	//	printf("name = %s\n", newname);
 	while(*argvptr && *argvptr != '-')
 	{
 		*newnameptr++ = *argvptr++;
