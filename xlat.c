@@ -6,7 +6,11 @@
 int main(int argc, char ** argv)
 {
         char newname[NAMELEN]="", * argvptr=argv[1], * newnameptr = newname;
-
+	if ( argc != 2 )
+	{
+	        printf ("Usage : %s <filename>\n", argv[0]);
+		return -1;
+	}
 	/* Skip leading hyphens */
 	while ( *argvptr && *argvptr == '-')
 	{
