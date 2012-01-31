@@ -5,6 +5,6 @@ do
     newname=`~/software/hbrename/rename $file`
     if [ "$newname" != "$file" ]
     then
-	mv -v ./$file ./$newname
+	mv --no-clobber -v ./$file ./$newname
     fi
 done
