@@ -2,7 +2,7 @@
 
 for file in *
 do
-    newname=`~/software/scr/rename $file`
+    newname=`~/software/hbrename/rename $file`
     if [ "$newname" != "$file" ]
     then
 	mv -v ./$file ./$newname
