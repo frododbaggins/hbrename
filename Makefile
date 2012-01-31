@@ -11,5 +11,5 @@ clean:
 .PHONY: rebuild
 rebuild:
 	make clean all
-release:
+release:rename cleanup.sh
 	@cp -fv cleanup.sh $(CLIENT_DIR)
