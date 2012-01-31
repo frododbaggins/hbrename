@@ -1,6 +1,10 @@
 #!/bin/bash
 
 for file in *
-do 
-    mv -v $file `~/software/scr/rename $file`
+do
+    newname=`~/software/scr/rename $file`
+    if [ "$newname" != "$file" ]
+    then
+	mv -v ./$file ./$newname
+    fi
 done
