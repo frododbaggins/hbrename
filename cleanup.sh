@@ -2,7 +2,7 @@
 
 for file in *
 do
-    newname=`~/software/hbrename/rename $file`
+    newname=`./rename $file`
     if [ "$newname" != "$file" ]
     then
 	mv --no-clobber -v ./$file ./$newname

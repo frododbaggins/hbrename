@@ -12,4 +12,4 @@ clean:
 rebuild:
 	make clean all
 release:rename cleanup.sh
-	@cp -fv cleanup.sh $(CLIENT_DIR)
+	@cp -fv rename cleanup.sh $(CLIENT_DIR)
