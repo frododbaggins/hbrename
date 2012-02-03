@@ -5,6 +5,7 @@ CLIENT_DIR=/home/mohan/.abc
 all:rename
 rename:xlat.c cleanup.sh
 	gcc -ggdb xlat.c -o rename
+	chmod a-w rename -v  # make read-only so that 'rm' emits a warning!
 .PHONY:clean
 clean:
 	@rm -fvr *~ tests/*~ tests/test-data-files/*~ tests/sanity/*~ tests/basic/*~ tests/pathological/*~ rename
