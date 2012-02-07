@@ -3,6 +3,14 @@
 #include <string.h>
 
 #define NAMELEN 80
+#ifdef DEBUG
+#define d_printf printf
+#else
+void d_printf(const char* fmt, ...)
+{
+}
+#endif
+
 int main(int argc, char ** argv)
 {
         char newname[NAMELEN]="", * argvptr=argv[1], * newnameptr = newname;
