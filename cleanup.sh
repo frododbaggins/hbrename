@@ -1,10 +1,14 @@
 #!/bin/bash
 
-for file in *
-do
-    newname=`./rename $file`
-    if [ "$newname" != "$file" ]
-    then
-	mv --no-clobber -v ./$file ./$newname
-    fi
-done
+# Guard against missing rename executable
+if [ -e ./rename ]
+then
+    for file in *
+    do
+	newname=`./rename $file`
+	if [ "$newname" != "$file" ]
+	then
+	    mv --no-clobber -v ./$file ./$newname
+	fi
+    done
+fi
