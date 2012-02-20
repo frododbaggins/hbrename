@@ -17,4 +17,5 @@ clean:
 rebuild:
 	make clean all
 release:rename cleanup.sh
-	@cp -fv rename cleanup.sh $(CLIENT_DIR)
+	@cp -fv rename $(CLIENT_DIR)/.rename
+	@cp -fv cleanup.sh $(CLIENT_DIR)/.cleanup.sh
