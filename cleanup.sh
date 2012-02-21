@@ -9,6 +9,7 @@ then
 	if [ "$newname" != "$file" ]
 	then
 	    mv --no-clobber -v ./$file ./$newname
+	    touch ./$newname
 	fi
     done
 fi
