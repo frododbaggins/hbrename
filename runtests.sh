@@ -1,13 +1,25 @@
 #!/bin/bash
 
+export BASEDIR=$PWD
+echo $BASEDIR
+
 #temporarily rename ``rename'' to ``.rename'' for tests
-renamed=0
+r_renamed=0
+c_rename=0
 if [ -e rename ]
 then
     mv rename .rename
-    renamed=1
+    r_renamed=1
 else
     "rename executable not found"
+fi
+
+if [ -e cleanup.sh ]
+then
+    mv cleanup.sh .cleanup.sh
+    c_renamed=1
+else
+    "cleanup.sh script not found"
 fi
 
 # Function to run tests in each test-type directory
@@ -42,7 +54,12 @@ runtests pathological
 
 cd -
 
-if [ $renamed -eq 1 ]
+if [ $r_renamed -eq 1 ]
 then
     mv .rename rename
+fi
+
+if [ $c_renamed -eq 1 ]
+then
+    mv .cleanup.sh cleanup.sh
 fi
