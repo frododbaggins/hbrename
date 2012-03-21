@@ -1,5 +1,15 @@
 #!/bin/bash
 
+#temporarily rename ``rename'' to ``.rename'' for tests
+renamed=0
+if [ -e rename ]
+then
+    mv rename .rename
+    renamed=1
+else
+    "rename executable not found"
+fi
+
 # Function to run tests in each test-type directory
 function runtests()
 {
@@ -29,3 +39,10 @@ runtests basic
 echo "Running pathological tests "
 echo "-------------------------- "
 runtests pathological
+
+cd -
+
+if [ $renamed -eq 1 ]
+then
+    mv .rename rename
+fi

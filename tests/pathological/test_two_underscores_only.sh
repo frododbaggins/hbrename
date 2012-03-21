@@ -7,7 +7,7 @@ then
 fi
 
 cd test-data-files
-result=`../../rename __.mp4`
+result=`../../.rename __.mp4`
 if [ "$result" == "__.mp4" ]
 then
 #    echo success

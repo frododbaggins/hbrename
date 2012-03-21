@@ -7,7 +7,7 @@ then
 fi
 
 cd test-data-files
-result=`../../rename aaa-bbb.ext`
+result=`../../.rename aaa-bbb.ext`
 if [ "$result" == "aaa.ext" ]
 then
 #    echo success
