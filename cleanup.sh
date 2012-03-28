@@ -5,8 +5,6 @@ if [ -e rename ]
 then
     mv rename .rename
     renamed=1
-else
-    "rename executable not found"
 fi
 
 # Guard against missing rename executable
