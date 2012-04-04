@@ -5,9 +5,9 @@ CLIENT_DIR=/home/mohan/.abc
 all:rename
 rename:xlat.c cleanup.sh
 ifeq ($(DEBUG),1)
-	@gcc -ggdb -DDEBUG=1 xlat.c -o rename
+	gcc -ggdb -DDEBUG=1 xlat.c -o rename
 else
-	@gcc -ggdb xlat.c -o rename
+	gcc xlat.c -o rename
 endif
 	@chmod a-w rename -v  # make read-only so that 'rm' emits a warning!
 .PHONY:clean
