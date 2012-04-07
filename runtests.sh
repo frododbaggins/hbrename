@@ -1,7 +1,6 @@
 #!/bin/bash
 
 export BASEDIR=$PWD
-echo $BASEDIR
 
 #temporarily rename ``rename'' to ``.rename'' for tests
 r_renamed=0
