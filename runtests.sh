@@ -25,6 +25,12 @@ fi
 function runtests()
 {
 #   Living dangerously, no check on whether an argument was passed
+    touch /tmp/hbrename-failure-text  # Location for detailed failure message
+    if [ ! -e /tmp/hbrename-failure-text ]
+    then
+	echo "Could not create error log file"
+	exit 1
+    fi
     for file in `ls $1/*.sh`
     do
 	bash $file
@@ -33,6 +39,9 @@ function runtests()
 	    echo `./$file -d` : Passed
 	else
 	    echo `./$file -d` : Failed!
+	    cat /tmp/hbrename-failure-text
+	    echo
+	    cat /dev/null > /tmp/hbrename-failure-text # clear it for subsequent tests
 	fi
     done
 }
