@@ -1,32 +1,49 @@
 #!/bin/bash
 
 export BASEDIR=$PWD
-echo $BASEDIR
+sanity_status=0
+error_log_file=/tmp/hbrename-failure-text  # Location for detailed failure message
 
 #temporarily rename ``rename'' to ``.rename'' for tests
-r_renamed=0
-c_rename=0
 if [ -e rename ]
 then
-    mv rename .rename
-    r_renamed=1
+    mv -vf rename .rename
 else
-    "rename executable not found"
+    echo "rename executable was not found."
+    echo "Please recreate executable (run \"make\") before running tests"
+    exit 2
 fi
 
 if [ -e cleanup.sh ]
 then
-    mv cleanup.sh .cleanup.sh
-    c_renamed=1
+    mv -vf cleanup.sh .cleanup.sh
 else
-    "cleanup.sh script not found"
+    echo "cleanup.sh script was not found"
+    echo "Please obtain cleanup.sh from a backup or other git revisions before running tests"
+    exit 2
 fi
 
+# Function to remove temporarily renamed files and other cleanup work
+function final_cleanup()
+{
+    cd $BASEDIR
+    if [ -e .rename ]
+    then
+	mv -vf .rename rename
+    fi
+
+    if [ -e .cleanup.sh ]
+    then
+	mv -vf .cleanup.sh cleanup.sh
+    fi
+
+    rm -f $error_log_file
+}
 # Function to run tests in each test-type directory
 function runtests()
 {
 #   Living dangerously, no check on whether an argument was passed
-    touch /tmp/hbrename-failure-text  # Location for detailed failure message
+    touch $error_log_file
     if [ ! -e /tmp/hbrename-failure-text ]
     then
 	echo "Could not create error log file"
@@ -40,9 +57,14 @@ function runtests()
 	    echo `./$file -d` : Passed
 	else
 	    echo `./$file -d` : Failed!
-	    cat /tmp/hbrename-failure-text
+	    cat $error_log_file
 	    echo
-	    cat /dev/null > /tmp/hbrename-failure-text # clear it for subsequent tests
+	    cat /dev/null > $error_log_file
+	    if [ "$1" == "sanity" ]
+	    then
+		sanity_status=1
+		break
+	    fi
 	fi
     done
 }
@@ -53,6 +75,12 @@ echo "Running sanity test "
 echo "------------------- "
 runtests sanity
 
+if [ $sanity_status -eq 1 ]
+then
+    final_cleanup
+    exit 2
+fi
+
 echo "Running basic tests "
 echo "------------------- "
 runtests basic
@@ -61,14 +89,4 @@ echo "Running pathological tests "
 echo "-------------------------- "
 runtests pathological
 
-cd -
-
-if [ $r_renamed -eq 1 ]
-then
-    mv .rename rename
-fi
-
-if [ $c_renamed -eq 1 ]
-then
-    mv .cleanup.sh cleanup.sh
-fi
+final_cleanup
