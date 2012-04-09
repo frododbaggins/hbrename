@@ -10,6 +10,8 @@ else
 	gcc xlat.c -o rename
 endif
 	@chmod a-w rename -v  # make read-only so that 'rm' emits a warning!
+perlrename:match.pl
+	@cp match.pl rename
 .PHONY:clean
 clean:
 	@rm -fvr *~ tests/*~ tests/test-data-files/*~ tests/sanity/*~ tests/basic/*~ tests/pathological/*~ rename
