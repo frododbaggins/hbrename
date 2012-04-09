@@ -42,7 +42,13 @@ function final_cleanup()
 # Function to run tests in each test-type directory
 function runtests()
 {
-#   Living dangerously, no check on whether an argument was passed
+#   Check that the function was called with the test-type directory
+    invar=${1-"none"}
+    if [ "$invar" == "none" ]
+    then
+	echo "No test-type directory specified!"
+	return
+    fi
     touch $error_log_file
     if [ ! -e /tmp/hbrename-failure-text ]
     then
