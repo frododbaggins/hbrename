@@ -2,7 +2,7 @@
 CLIENT_DIR=/home/mohan/.abc
 
 # TODO: clean this makefile up and move more into sub-directory makefiles
-all:perlrename
+all:rename
 rename:xlat.c cleanup.sh
 ifeq ($(DEBUG),1)
 	gcc -ggdb -DDEBUG=1 xlat.c -o rename
