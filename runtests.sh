@@ -7,7 +7,7 @@ error_log_file=/tmp/hbrename-failure-text  # Location for detailed failure messa
 #temporarily rename ``rename'' to ``.rename'' for tests
 if [ -e rename ]
 then
-    mv -vf rename .rename
+    mv -f rename .rename
 else
     echo "rename executable was not found."
     echo "Please recreate executable (run \"make\") before running tests"
@@ -16,7 +16,7 @@ fi
 
 if [ -e cleanup.sh ]
 then
-    mv -vf cleanup.sh .cleanup.sh
+    mv -f cleanup.sh .cleanup.sh
 else
     echo "cleanup.sh script was not found"
     echo "Please obtain cleanup.sh from a backup or other git revisions before running tests"
@@ -29,12 +29,12 @@ function final_cleanup()
     cd $BASEDIR
     if [ -e .rename ]
     then
-	mv -vf .rename rename
+	mv -f .rename rename
     fi
 
     if [ -e .cleanup.sh ]
     then
-	mv -vf .cleanup.sh cleanup.sh
+	mv -f .cleanup.sh cleanup.sh
     fi
 
     rm -f $error_log_file
