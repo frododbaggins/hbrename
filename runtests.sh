@@ -3,11 +3,12 @@
 export BASEDIR=$PWD
 sanity_status=0
 error_log_file=/tmp/hbrename-failure-text  # Location for detailed failure message
+export error_log_file
 
 #temporarily rename ``rename'' to ``.rename'' for tests
 if [ -e rename ]
 then
-    mv -vf rename .rename
+    mv -f rename .rename
 else
     echo "rename executable was not found."
     echo "Please recreate executable (run \"make\") before running tests"
@@ -16,7 +17,7 @@ fi
 
 if [ -e cleanup.sh ]
 then
-    mv -vf cleanup.sh .cleanup.sh
+    mv -f cleanup.sh .cleanup.sh
 else
     echo "cleanup.sh script was not found"
     echo "Please obtain cleanup.sh from a backup or other git revisions before running tests"
@@ -29,12 +30,12 @@ function final_cleanup()
     cd $BASEDIR
     if [ -e .rename ]
     then
-	mv -vf .rename rename
+	mv -f .rename rename
     fi
 
     if [ -e .cleanup.sh ]
     then
-	mv -vf .cleanup.sh cleanup.sh
+	mv -f .cleanup.sh cleanup.sh
     fi
 
     rm -f $error_log_file
@@ -42,7 +43,13 @@ function final_cleanup()
 # Function to run tests in each test-type directory
 function runtests()
 {
-#   Living dangerously, no check on whether an argument was passed
+#   Check that the function was called with the test-type directory
+    invar=${1-"none"}
+    if [ "$invar" == "none" ]
+    then
+	echo "No test-type directory specified!"
+	return
+    fi
     touch $error_log_file
     if [ ! -e /tmp/hbrename-failure-text ]
     then
