@@ -20,7 +20,7 @@ if ( $0 =~ m/match.pl/ )
 }
 
 my $in_filename=$ARGV[0];
-$in_filename =~ m/([a-zA-Z0-9]*)(_{0,})-([a-zA-Z0-9]+)\.([a-zA-Z0-9]+)/;
+$in_filename =~ m/([a-zA-Z0-9]*)(_{0,})-(.*)([a-zA-Z0-9]+)\.([a-zA-Z0-9]+)/;
 
 # This is to aid debugging : when run as rename/.rename, do not take debug actions
 # described in this if clause 
@@ -35,7 +35,7 @@ if ( $is_debug )
     print $4 . "\n";
 }
 
-if ((defined $1) && (defined $4))
+if ((defined $1) && (defined $5))
 {
-    print "$1.$4";
+    print "$1.$5";
 }
