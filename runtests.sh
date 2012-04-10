@@ -3,6 +3,7 @@
 export BASEDIR=$PWD
 sanity_status=0
 error_log_file=/tmp/hbrename-failure-text  # Location for detailed failure message
+export error_log_file
 
 #temporarily rename ``rename'' to ``.rename'' for tests
 if [ -e rename ]
