@@ -3,13 +3,14 @@ CLIENT_DIR=/home/mohan/.abc
 
 # TODO: clean this makefile up and move more into sub-directory makefiles
 all:rename
-rename:xlat.c cleanup.sh
+rename:xlat.c cleanup.sh FORCE
 ifeq ($(DEBUG),1)
 	gcc -ggdb -DDEBUG=1 xlat.c -o rename
 else
 	gcc xlat.c -o rename
 endif
 	@chmod a-w rename -v  # make read-only so that 'rm' emits a warning!
+FORCE:
 perlrename:match.pl
 	@cp -f match.pl rename
 .PHONY:clean
