@@ -14,6 +14,6 @@ then
     exit 0
 else
 #    echo problem
-    echo "    Expected result : name.mp4 Actual result : $result"  > /tmp/hbrename-failure-text
+    echo "    Expected result : name.mp4 Actual result : $result"  > $error_log_file
     exit 1
 fi
