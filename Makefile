@@ -1,7 +1,7 @@
 #!/bin/bash
 CLIENT_DIR=/home/mohan/.abc
 
-# TODO: clean this makefile up and move more into sub-directory makefiles
+# TODO: clean this makefile up
 all:rename
 rename:xlat.c cleanup.sh
 ifeq ($(DEBUG),1)
