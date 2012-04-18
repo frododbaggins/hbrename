@@ -14,7 +14,7 @@ perlrename:match.pl
 	@cp -f match.pl rename
 .PHONY:clean
 clean:
-	@rm -fvr *~ tests/*~ tests/test-data-files/*~ tests/sanity/*~ tests/basic/*~ tests/pathological/*~ rename
+	@rm -fvr *~ tests/*~ tests/sanity/*~ tests/basic/*~ tests/pathological/*~ rename
 .PHONY: rebuild
 rebuild:
 	make clean all
