@@ -23,5 +23,5 @@ release:rename cleanup.sh
 	-@cp -fv rename $(CLIENT_DIR)/.rename
 	-@cp -fv cleanup.sh $(CLIENT_DIR)/.cleanup.sh
 .PHONY:perlrelease
-	@cp -fv perlrename $(CLIENT_DIR)/.rename
-	@cp -fv cleanup.sh $(CLIENT_DIR)/.cleanup.sh
+	-@cp -fv perlrename $(CLIENT_DIR)/.rename
+	-@cp -fv cleanup.sh $(CLIENT_DIR)/.cleanup.sh
