@@ -20,5 +20,5 @@ rebuild:
 	make clean all
 .PHONY:release
 release:rename cleanup.sh
-	@cp -fv rename $(CLIENT_DIR)/.rename
-	@cp -fv cleanup.sh $(CLIENT_DIR)/.cleanup.sh
+	-@cp -fv rename $(CLIENT_DIR)/.rename
+	-@cp -fv cleanup.sh $(CLIENT_DIR)/.cleanup.sh
