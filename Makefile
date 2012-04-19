@@ -9,12 +9,12 @@ ifeq ($(DEBUG),1)
 else
 	gcc xlat.c -o rename
 endif
-	@chmod a-w rename -v  # make read-only so that 'rm' emits a warning!
+	@chmod a-w rename  # make read-only so that 'rm' emits a warning!
 perlrename:match.pl
 	@cp -fv match.pl perlrename
 .PHONY:clean
 clean:
-	@rm -fvr *~ tests/*~ tests/sanity/*~ tests/basic/*~ tests/pathological/*~ rename
+	-@rm -fvr *~ tests/*~ tests/sanity/*~ tests/basic/*~ tests/pathological/*~ rename perlrename
 .PHONY: rebuild
 rebuild:
 	make clean all
