@@ -18,7 +18,7 @@ then
         mv -f rename .rename
     else
         echo "rename executable was not found."
-        echo "Please recreate executable (run \"make\") before running tests"
+        echo "Please recreate executable (run \"make\" or \"make rename\") before running tests."
         exit 2
     fi
 else
@@ -27,7 +27,7 @@ else
         mv -f perlrename .rename
     else
         echo "perlrename executable was not found."
-        echo "Please recreate executable (run \"make perlrename\") before running tests"
+        echo "Please recreate executable (run \"make\" or \"make perlrename\") before running tests."
         exit 2
     fi
 fi
