@@ -5,15 +5,33 @@ sanity_status=0
 error_log_file=/tmp/hbrename-failure-text  # Location for detailed failure message
 export error_log_file
 
-#temporarily rename ``rename'' to ``.rename'' for tests
-if [ -e rename ]
+use_perl=0
+if [ "$1" == "-p" ]
 then
-    mv -f rename .rename
-else
-    echo "rename executable was not found."
-    echo "Please recreate executable (run \"make\") before running tests"
-    exit 2
+    use_perl=1
 fi
+#temporarily rename ``rename''/``perlrename'' to ``.rename'' for tests
+if [ $use_perl -eq 0 ]
+then
+    if [ -e rename ]
+    then
+        mv -f rename .rename
+    else
+        echo "rename executable was not found."
+        echo "Please recreate executable (run \"make\") before running tests"
+        exit 2
+    fi
+else
+    if [ -e perlrename ]
+    then
+        mv -f perlrename .rename
+    else
+        echo "perlrename executable was not found."
+        echo "Please recreate executable (run \"make perlrename\") before running tests"
+        exit 2
+    fi
+fi
+
 
 if [ -e cleanup.sh ]
 then
@@ -30,7 +48,12 @@ function final_cleanup()
     cd $BASEDIR
     if [ -e .rename ]
     then
-	mv -f .rename rename
+        if [ $use_perl -eq 0 ]
+        then
+	    mv -f .rename rename
+        else
+	    mv -f .rename perlrename
+        fi
     fi
 
     if [ -e .cleanup.sh ]
