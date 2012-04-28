@@ -13,6 +13,6 @@ then
     exit 0
 else
 #    echo problem
-    echo "    Expected result : a.mp4 Actual result : $result "  > $error_log_file 
+    echo "    Expected result : a.mp4 Actual result : $result "  > $error_log_file
     exit 1
 fi
