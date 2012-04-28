@@ -20,10 +20,12 @@ char * new_name (char *argv_ptr);
 char *newname = NULL;
 int main(int argc, char ** argv)
 {
+#ifdef TESTS
         newname = malloc (NAMELEN * sizeof (char));
         run_tests();
         free (newname);
         exit(0);
+#endif
         DIR* dir = opendir ( "." );
         if (NULL == dir){
             perror (strerror(errno));
@@ -65,6 +67,8 @@ int main(int argc, char ** argv)
 
 char * new_name (char *argv_ptr)
 {
+        assert (argv_ptr);
+        assert (newname);
         char *newnameptr = newname;
         char *argvptr = argv_ptr;
 	/* Skip leading hyphens */
@@ -126,7 +130,11 @@ void run_tests(void)
         }
 #endif
         assert ( 0 == strcmp (new_name ("a-b.c"), "a.c"));
+        assert ( 0 == strcmp (new_name ("a__b-c.c"), "a__b.c"));
+        assert ( 0 == strcmp (new_name ("aaa-bbb.ext"), "aaa.ext"));
         assert ( 0 == strcmp (new_name ("a_b_c_d-e.mp4"), "a_b_c_d.mp4"));
-        assert ( 0 == strcmp (new_name ("a________-rem.mp4"), "a________.mp4"));
-
+        assert ( 0 == strcmp (new_name ("filename_-rem.mp4"), "filename.mp4"));
+        assert ( 0 == strcmp (new_name ("a-b-c.mp4"), "a.mp4"));
+        assert ( 0 == strcmp (new_name ("-name.mp4"), "name.mp4"));
+//        printf ("old name : %s \t new name: %s\n", "a__b-c.mp4", new_name("a__b.mp4"));
 }
