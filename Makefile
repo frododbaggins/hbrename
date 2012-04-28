@@ -12,6 +12,7 @@ endif
 	@chmod a-w rename  # make read-only so that 'rm' emits a warning!
 perlrename:match.pl
 	@cp -fv match.pl perlrename
+	@chmod a-w perlrename  # make read-only so that 'rm' emits a warning!
 .PHONY:clean
 clean:
 	-@rm -fvr *~ tests/*~ tests/sanity/*~ tests/basic/*~ tests/pathological/*~ rename perlrename core*
