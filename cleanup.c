@@ -1,4 +1,6 @@
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <dirent.h>
 #include <errno.h>
 #include <stdio.h>
@@ -47,12 +49,23 @@ int main(int argc, char ** argv)
                 if (dirent->d_type == DT_REG){
                         newname = new_name(dirent->d_name);
                         if (strcmp (newname, dirent->d_name)){
-                                int ret = rename (dirent->d_name, newname);
-                                if (ret){
-                                        perror (strerror(errno));
-                                        closedir(dir);
-                                        free (newname);
-                                        exit (-2);
+                                int ret = -1;
+                                /* try opening file with proposed new name
+                                   to check if it exists
+                                 */
+                                ret = open (newname, O_RDONLY);
+                                if (-1 == ret){
+                                        ret = rename (dirent->d_name, newname);
+                                        if (ret){
+                                                perror (strerror(errno));
+                                                closedir(dir);
+                                                free (newname);
+                                                exit (-2);
+                                        }
+                                }else{
+                                        /* File with proposed new name exists.
+                                           Do nothing.
+                                         */
                                 }
                         }
                 }
