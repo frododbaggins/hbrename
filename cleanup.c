@@ -44,16 +44,15 @@ int main(int argc, char ** argv)
 
         while (NULL != (dirent = readdir (dir)))
         {
-//                printf ("%s\n", dirent->d_name);
+            d_printf ("file name %s\n", dirent->d_name);
 #ifdef _DIRENT_HAVE_D_TYPE
                 if (dirent->d_type == DT_REG){
                         newname = new_name(dirent->d_name);
                         if (strcmp (newname, dirent->d_name)){
                                 int ret = -1;
-                                /* try opening file with proposed new name
-                                   to check if it exists
-                                 */
-                                ret = open (newname, O_RDONLY);
+                                struct stat statbuf;
+                                /* check if file with proposed new name already exists */
+                                ret = stat (newname, &statbuf);
                                 if (-1 == ret){
                                         ret = rename (dirent->d_name, newname);
                                         if (ret){
@@ -64,8 +63,7 @@ int main(int argc, char ** argv)
                                         }
                                 }else{
                                         /* File with proposed new name exists.
-                                           Do nothing.
-                                         */
+                                           Do nothing. */
                                 }
                         }
                 }
