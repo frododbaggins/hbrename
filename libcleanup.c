@@ -1,5 +1,16 @@
 #include "libcleanup.h"
 
+int d_printf(const char* fmt, ...)
+{
+#ifdef DEBUG
+    va_list args;
+    va_start (args, fmt);
+    vfprintf (stderr, fmt, args);
+    va_end (args);
+#endif
+    return 0;
+}
+
 char *newname = NULL;
 
 char * new_name (char *argv_ptr)

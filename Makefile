@@ -28,14 +28,18 @@ else
 endif
 
 libcleanup.so:libcleanup.c libcleanup.h
+ifeq ($(DEBUG),1)
+	gcc -c -shared -DDEBUG libcleanup.c -o libcleanup.so
+else
 	gcc -c -shared libcleanup.c -o libcleanup.so
+endif
 
 runtests:tests.c libcleanup.so
 	gcc tests.c libcleanup.so -o runtests
 
 .PHONY:clean
 clean:
-	-@rm -fvr *~ rename perlrename core* cleanup libcleanup.so
+	-@rm -fvr *~ rename perlrename core* cleanup libcleanup.so runtests
 	-@rm -fvr *~ tests/*~ tests/sanity/*~ tests/basic/*~ tests/pathological/*~
 .PHONY: rebuild
 rebuild:

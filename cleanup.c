@@ -6,18 +6,7 @@
 #include <errno.h>
 #include <string.h>
 
-/* XXX - d_printf should really be in libcleanup */
-#ifdef DEBUG
-#define d_printf printf
-#else
-void d_printf(const char* fmt, ...)
-{
-}
-#endif
-
-void run_tests(void);
 extern char* newname; /* From libcleanup.so */
-
 int main(int argc, char ** argv)
 {
         DIR* dir = opendir ( "." );
