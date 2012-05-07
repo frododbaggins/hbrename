@@ -2,3 +2,4 @@ perlrename
 rename
 *~
 cleanup
+runtests
