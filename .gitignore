@@ -2,3 +2,5 @@ perlrename
 rename
 *~
 cleanup
+runtests
+libcleanup.so
