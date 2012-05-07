@@ -3,3 +3,4 @@ rename
 *~
 cleanup
 runtests
+libcleanup.so
