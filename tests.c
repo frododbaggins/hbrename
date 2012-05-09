@@ -1,7 +1,7 @@
 #include "libcleanup.h"
 extern char *newname;		/* From libcleanup.so */
 
-void run_tests(void)
+void run_tests(int verbose)
 {
     assert(0 == strcmp(new_name("a-b.c"), "a.c"));
     assert(0 == strcmp(new_name("a__b-c.c"), "a__b.c"));
@@ -15,12 +15,26 @@ void run_tests(void)
     /* Fails -- commented out
     assert(0 == strcmp(new_name("--.mp4"), "--.mp4"));
     */
+    if (verbose) {
+        printf ("9/9 tests passed\n");
+    }
 }
 
 int main(int argc, char **argv)
 {
+    int opt, verbose;
+    while ((opt = getopt(argc, argv, "v")) != -1) {
+        switch (opt) {
+        case 'v':
+            verbose = 1;
+            break;
+        default:
+            verbose = 0;
+        }
+    }
+    assert ((verbose == 0) || (verbose == 1));
     newname = malloc(NAMELEN * sizeof(char));
-    run_tests();
+    run_tests(verbose);
     free(newname);
     return 0;
 }
