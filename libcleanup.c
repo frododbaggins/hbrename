@@ -27,7 +27,7 @@ char *new_name(char *argv_ptr)
      * followed by the extension. We do not want to modify such a name. Let us return it as it is
      */
     if (*argvptr == '.') {
-	return argvptr;
+        return argv_ptr;
     }
 
     strncpy(newname, argvptr, NAMELEN - 1);
