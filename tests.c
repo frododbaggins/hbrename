@@ -10,6 +10,11 @@ void run_tests(void)
     assert(0 == strcmp(new_name("filename_-rem.mp4"), "filename.mp4"));
     assert(0 == strcmp(new_name("a-b-c.mp4"), "a.mp4"));
     assert(0 == strcmp(new_name("-name.mp4"), "name.mp4"));
+    assert(0 == strcmp(new_name("__.mp4"), "__.mp4"));
+    assert(0 == strcmp(new_name("____.mp4"), "____.mp4"));
+    /* Fails -- commented out
+    assert(0 == strcmp(new_name("--.mp4"), "--.mp4"));
+    */
 }
 
 int main(int argc, char **argv)
