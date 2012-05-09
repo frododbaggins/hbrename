@@ -5,10 +5,22 @@
 #include <dirent.h>
 #include <errno.h>
 #include <string.h>
+#include <unistd.h>
 
 extern char *newname;		/* From libcleanup.so */
 int main(int argc, char **argv)
 {
+    int opt, quiet;
+    while ((opt = getopt(argc, argv, "q")) != -1) {
+        switch (opt) {
+        case 'q':
+            quiet = 1;
+            break;
+        default:
+            quiet = 0;
+        }
+    }
+    assert ((quiet == 0) || (quiet == 1));
     const char *execname = "cleanup";
     DIR *dir = opendir(".");
     if (NULL == dir) {
@@ -39,6 +51,9 @@ int main(int argc, char **argv)
 		ret = stat(newname, &statbuf);
 		if (-1 == ret) {
 		    ret = rename(dirent->d_name, newname);
+                    if (!quiet) {
+                        printf ("%s -> %s\n", dirent->d_name, newname);
+                    }
 		    if (ret) {
 			perror(strerror(errno));
 			closedir(dir);
