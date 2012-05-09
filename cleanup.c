@@ -9,6 +9,7 @@
 extern char *newname;		/* From libcleanup.so */
 int main(int argc, char **argv)
 {
+    const char *execname = "cleanup";
     DIR *dir = opendir(".");
     if (NULL == dir) {
 	perror(strerror(errno));
@@ -24,6 +25,9 @@ int main(int argc, char **argv)
     }
 
     while (NULL != (dirent = readdir(dir))) {
+        if(!strcmp (dirent->d_name, execname)){
+            continue;
+        }
 	d_printf("file name %s\n", dirent->d_name);
 #ifdef _DIRENT_HAVE_D_TYPE
 	if (dirent->d_type == DT_REG) {
