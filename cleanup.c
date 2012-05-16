@@ -5,7 +5,6 @@
 #include <dirent.h>
 #include <errno.h>
 #include <string.h>
-#include <unistd.h>
 
 extern char *newname;		/* From libcleanup.so */
 int main(int argc, char **argv)

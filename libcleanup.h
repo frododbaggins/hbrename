@@ -5,6 +5,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <unistd.h>
 
 #define NAMELEN 80
 char *new_name(char *argv_ptr);
