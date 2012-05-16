@@ -13,8 +13,9 @@ void run_tests(int verbose)
     assert(0 == strcmp(new_name("__.mp4"), "__.mp4"));
     assert(0 == strcmp(new_name("____.mp4"), "____.mp4"));
     assert(0 == strcmp(new_name("--.mp4"), "--.mp4"));
+    assert(0 == strcmp(new_name("a_-_b.mp4"), "a_b.mp4"));
 
     if (verbose) {
-        printf ("10/10 tests passed\n");
+        printf ("11/11 tests passed\n");
     }
 }
