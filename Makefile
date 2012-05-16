@@ -25,7 +25,11 @@ else
 endif
 
 runtests:tests.c libcleanup.so libtests.so
+ifeq ($(DEBUG),1)
+	gcc -ggdb -DDEBUG tests.c libcleanup.so libtests.so -o runtests
+else
 	gcc tests.c libcleanup.so libtests.so -o runtests
+endif
 
 .PHONY:clean
 clean:
