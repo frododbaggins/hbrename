@@ -33,6 +33,14 @@ char *new_name(char *argv_ptr)
     strncpy(newname, argvptr, NAMELEN - 1);
 
     while (*argvptr && *argvptr != '-') {
+        if (*argvptr == '_') {
+            if(*(argvptr+1) == '-') {
+                if (*(argvptr+2) == '_') {
+                    argvptr += 2;
+                    continue;
+                }
+            }
+        }
 	*newnameptr++ = *argvptr++;
     }
     while (*argvptr && *argvptr != '.')
