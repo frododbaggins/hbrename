@@ -1,8 +1,4 @@
-#include "libcleanup.h"
-extern char *newname;		/* From libcleanup.so */
-
-#define SOFT_CHECK 0
-#define HARD_CHECK 1
+#include "libtests.h"
 
 int tests_run = 0, failcount = 0, check_type = 0;
 int check (char * old_name, char * expected_new_name)
@@ -21,12 +17,12 @@ int check (char * old_name, char * expected_new_name)
             fprintf (stderr, "Expected new name: %s, Actual : %s\n",
                     expected_new_name, actual_result);
             fprintf (stderr, "%d/%d tests passed\n", (tests_run - failcount), tests_run);
-            assert (0);
+            exit (-failcount);
         }
     }
 }
 
-void run_tests(int verbose)
+int run_tests(int verbose)
 {
     check("a-b.c", "a.c");
     check("a__b-c.c", "a__b.c");
@@ -43,4 +39,5 @@ void run_tests(int verbose)
     if (verbose) {
         printf ("%d/%d tests passed\n", (tests_run - failcount), tests_run);
     }
+    return -failcount;
 }

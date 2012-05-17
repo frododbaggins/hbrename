@@ -2,6 +2,11 @@
 #define __LIBTESTS_H__
 
 #include "libcleanup.h"
-void run_tests(int verbose);
+extern char *newname;		/* From libcleanup.so */
+
+#define SOFT_CHECK 0
+#define HARD_CHECK 1
+
+int run_tests(int verbose);
 
 #endif

@@ -34,7 +34,7 @@ int main(int argc, char **argv)
         free(newname);
         return 0;
     }
-    run_tests(verbose);
+    int tests_status = run_tests(verbose);
     free(newname);
-    return 0;
+    return tests_status;
 }
