@@ -1,21 +1,43 @@
-#include "libcleanup.h"
-extern char *newname;		/* From libcleanup.so */
+#include "libtests.h"
 
-void run_tests(int verbose)
+int tests_run = 0, failcount = 0, check_type = 0;
+int check (char * old_name, char * expected_new_name)
 {
-    assert(0 == strcmp(new_name("a-b.c"), "a.c"));
-    assert(0 == strcmp(new_name("a__b-c.c"), "a__b.c"));
-    assert(0 == strcmp(new_name("aaa-bbb.ext"), "aaa.ext"));
-    assert(0 == strcmp(new_name("a_b_c_d-e.mp4"), "a_b_c_d.mp4"));
-    assert(0 == strcmp(new_name("filename_-rem.mp4"), "filename.mp4"));
-    assert(0 == strcmp(new_name("a-b-c.mp4"), "a.mp4"));
-    assert(0 == strcmp(new_name("-name.mp4"), "name.mp4"));
-    assert(0 == strcmp(new_name("__.mp4"), "__.mp4"));
-    assert(0 == strcmp(new_name("____.mp4"), "____.mp4"));
-    assert(0 == strcmp(new_name("--.mp4"), "--.mp4"));
-    assert(0 == strcmp(new_name("a_-_b.mp4"), "a_b.mp4"));
+    char * actual_result = new_name (old_name);
+    tests_run++;
+    if (0 == strcmp (actual_result, expected_new_name)) {
+        return 0;
+    } else {
+        failcount++;
+        if (check_type == SOFT_CHECK) {
+            printf ("Expected new name: %s, Actual : %s\n",
+                    expected_new_name, actual_result);
+            return -1;
+        } else {
+            fprintf (stderr, "Expected new name: %s, Actual : %s\n",
+                    expected_new_name, actual_result);
+            fprintf (stderr, "%d/%d tests passed\n", (tests_run - failcount), tests_run);
+            exit (-failcount);
+        }
+    }
+}
+
+int run_tests(int verbose)
+{
+    check("a-b.c", "a.c");
+    check("a__b-c.c", "a__b.c");
+    check("aaa-bbb.ext", "aaa.ext");
+    check("a_b_c_d-e.mp4", "a_b_c_d.mp4");
+    check("filename_-rem.mp4", "filename.mp4");
+    check("a-b-c.mp4", "a.mp4");
+    check("-name.mp4", "name.mp4");
+    check("__.mp4", "__.mp4");
+    check("____.mp4", "____.mp4");
+    check("--.mp4", "--.mp4");
+    check("a_-_b.mp4", "a_b.mp4");
 
     if (verbose) {
-        printf ("11/11 tests passed\n");
+        printf ("%d/%d tests passed\n", (tests_run - failcount), tests_run);
     }
+    return -failcount;
 }
