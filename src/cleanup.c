@@ -1,4 +1,4 @@
-#include "libcleanup.h"
+#include "../common/libcleanup.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -9,6 +9,18 @@
 extern char *newname;		/* From libcleanup.so */
 int main(int argc, char **argv)
 {
+    int opt, quiet;
+    while ((opt = getopt(argc, argv, "q")) != -1) {
+        switch (opt) {
+        case 'q':
+            quiet = 1;
+            break;
+        default:
+            quiet = 0;
+        }
+    }
+    assert ((quiet == 0) || (quiet == 1));
+    const char *execname = "cleanup";
     DIR *dir = opendir(".");
     if (NULL == dir) {
 	perror(strerror(errno));
@@ -24,6 +36,9 @@ int main(int argc, char **argv)
     }
 
     while (NULL != (dirent = readdir(dir))) {
+        if(!strcmp (dirent->d_name, execname)){
+            continue;
+        }
 	d_printf("file name %s\n", dirent->d_name);
 #ifdef _DIRENT_HAVE_D_TYPE
 	if (dirent->d_type == DT_REG) {
@@ -35,6 +50,9 @@ int main(int argc, char **argv)
 		ret = stat(newname, &statbuf);
 		if (-1 == ret) {
 		    ret = rename(dirent->d_name, newname);
+                    if (!quiet) {
+                        printf ("%s -> %s\n", dirent->d_name, newname);
+                    }
 		    if (ret) {
 			perror(strerror(errno));
 			closedir(dir);

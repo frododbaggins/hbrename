@@ -1,6 +1,6 @@
-perlrename
-rename
 *~
 cleanup
 runtests
 libcleanup.so
+libtests.so
+core*

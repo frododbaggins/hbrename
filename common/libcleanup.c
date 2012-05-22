@@ -27,13 +27,22 @@ char *new_name(char *argv_ptr)
      * followed by the extension. We do not want to modify such a name. Let us return it as it is
      */
     if (*argvptr == '.') {
-	return argvptr;
+        return argv_ptr;
     }
 
     strncpy(newname, argvptr, NAMELEN - 1);
 
     while (*argvptr && *argvptr != '-') {
-	*newnameptr++ = *argvptr++;
+        /* This set of conditions is to pass the test of
+         * a_-_b.c. This example is seen often.
+         */
+        if ((*argvptr == '_')
+            && (*(argvptr+1) == '-')
+            && (*(argvptr+2) == '_')) {
+            argvptr += 2;
+            continue;
+        }
+        *newnameptr++ = *argvptr++;
     }
     while (*argvptr && *argvptr != '.')
 	argvptr++;
