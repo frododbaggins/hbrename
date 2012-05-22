@@ -1,6 +1,12 @@
 #include "libtests.h"
 
 int tests_run = 0, failcount = 0, check_type = 0;
+
+void set_check_type (int type)
+{
+    assert ((type == SOFT_CHECK) || (type == HARD_CHECK));
+    check_type = type;
+}
 int check (char * old_name, char * expected_new_name)
 {
     char * actual_result = new_name (old_name);
