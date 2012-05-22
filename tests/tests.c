@@ -1,4 +1,4 @@
-#include "libtests.h"
+#include "../common/libtests.h"
 extern char *newname;          /* From libcleanup.so */
 
 int main(int argc, char **argv)
