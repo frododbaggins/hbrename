@@ -2,38 +2,42 @@
 CLIENT_DIR=/home/mohan/.abc
 TARGETS=cleanup runtests
 
+VPATH = common src
 all:$(TARGETS)
-cleanup:cleanup.c libcleanup.so libtests.so
+cleanup:
 ifeq ($(DEBUG),1)
-	gcc -Wall -ggdb -DDEBUG cleanup.c libtests.so libcleanup.so -o cleanup
+	make -C src DEBUG=1 cleanup
 else
-	gcc -Wall cleanup.c libcleanup.so -o cleanup
+	make -C src cleanup
 endif
 
-libcleanup.so:libcleanup.c libcleanup.h
+runtests:
 ifeq ($(DEBUG),1)
-	gcc -c -shared -ggdb -DDEBUG libcleanup.c -o libcleanup.so
+	make -C tests DEBUG=1 runtests
 else
-	gcc -c -shared libcleanup.c -o libcleanup.so
+	make -C tests runtests
 endif
 
-libtests.so:libtests.c libtests.h
+libcleanup.so:
 ifeq ($(DEBUG),1)
-	gcc -c -shared -ggdb -DDEBUG libtests.c -o libtests.so
+	make -C common DEBUG=1 libcleanup.so
 else
-	gcc -c -shared libtests.c -o libtests.so
+	make -C common libcleanup.so
 endif
 
-runtests:tests.c libcleanup.so libtests.so
+libtests.so:
 ifeq ($(DEBUG),1)
-	gcc -ggdb -DDEBUG tests.c libcleanup.so libtests.so -o runtests
+	make -C common DEBUG=1 libtests.so
 else
-	gcc tests.c libcleanup.so libtests.so -o runtests
+	make -C common libtests.so
 endif
 
 .PHONY:clean
 clean:
-	-@rm -fvr *~ core* cleanup *.so runtests
+	-@rm -fvr *~ core* $(TARGETS)
+	make -C src clean
+	make -C common clean
+	make -C tests clean
 .PHONY: rebuild
 rebuild:
 	make clean all
