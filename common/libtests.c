@@ -22,28 +22,36 @@ int check (char * old_name, char * expected_new_name)
         } else {
             fprintf (stderr, "Expected new name: %s, Actual : %s\n",
                     expected_new_name, actual_result);
-            fprintf (stderr, "%d/%d tests passed\n", (tests_run - failcount), tests_run);
+            fprintf (stderr, "%d/%d tests passed\n", (tests_run - failcount), TEST_COUNT);
             exit (-failcount);
         }
     }
 }
 
+/* When this list is appended to, the value of TEST_COUNT
+ * must be updated in libtests.h.
+ */
+char names [TEST_COUNT][2][NAMELEN] = { "a-b.c", "a.c",
+                                        "a__b-c.c", "a__b.c",
+                                        "aaa-bbb.ext", "aaa.ext",
+                                        "a_b_c_d-e.mp4", "a_b_c_d.mp4",
+                                        "filename_-rem.mp4", "filename.mp4",
+                                        "a-b-c.mp4", "a.mp4",
+                                        "-name.mp4", "name.mp4",
+                                        "__.mp4", "__.mp4",
+                                        "____.mp4", "____.mp4",
+                                        "--.mp4", "--.mp4",
+                                        "a_-_b.mp4", "a_b.mp4",
+                                        "a - b.mp4", "a_b.mp4"};
+
 int run_tests(int verbose)
 {
-    check("a-b.c", "a.c");
-    check("a__b-c.c", "a__b.c");
-    check("aaa-bbb.ext", "aaa.ext");
-    check("a_b_c_d-e.mp4", "a_b_c_d.mp4");
-    check("filename_-rem.mp4", "filename.mp4");
-    check("a-b-c.mp4", "a.mp4");
-    check("-name.mp4", "name.mp4");
-    check("__.mp4", "__.mp4");
-    check("____.mp4", "____.mp4");
-    check("--.mp4", "--.mp4");
-    check("a_-_b.mp4", "a_b.mp4");
+    for (int i = 0 ; i < TEST_COUNT ; i++) {
+        check (names[i][0], names [i][1]);
+    }
 
     if (verbose) {
-        printf ("%d/%d tests passed\n", (tests_run - failcount), tests_run);
+        printf ("%d/%d tests passed\n", (tests_run - failcount), TEST_COUNT);
     }
     return -failcount;
 }
