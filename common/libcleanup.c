@@ -13,7 +13,7 @@ int d_printf(const char *fmt, ...)
 
 char *newname = NULL;
 
-char *new_name(char *argv_ptr)
+char *new_name (char *argv_ptr)
 {
     assert(argv_ptr);
     assert(newname);
@@ -30,6 +30,15 @@ char *new_name(char *argv_ptr)
         return argv_ptr;
     }
 
+    /* Do one pass replacing all spaces with underscores */
+    char *saved_argv_ptr = argvptr;
+    while (*argvptr) {
+        if(*argvptr == ' ') {
+            *argvptr = '_';
+        }
+        argvptr++;
+    }
+    argvptr = saved_argv_ptr;
     strncpy(newname, argvptr, NAMELEN - 1);
 
     while (*argvptr && *argvptr != '-') {
