@@ -13,6 +13,11 @@ int d_printf(const char *fmt, ...)
 
 char *newname = NULL;
 
+/* new_name is the core routine that determines the new name
+ * after removing unwanted characters from the given name.
+ * The input string is assumed to be writable.
+ * Thus, passing literal strings may cause runtime errors.
+ */
 char *new_name (char *argv_ptr)
 {
     assert(argv_ptr);
