@@ -8,5 +8,5 @@ extern char *newname;		/* From libcleanup.so */
 #define HARD_CHECK 1
 #define TEST_COUNT 12
 int run_tests(int verbose);
-
+void set_check_type (int);
 #endif
