@@ -18,7 +18,7 @@ int main(int argc, char **argv)
                     strcat(cmdarg,"\0");
                     cmdcheck = 1;
             } else {
-                printf ("-c option requires an argument\n");
+                fprintf (stderr, "-c option requires an argument\n");
                 return -1;
             }
             break;
