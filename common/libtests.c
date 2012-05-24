@@ -16,14 +16,15 @@ int check (char * old_name, char * expected_new_name)
     } else {
         failcount++;
         if (check_type == SOFT_CHECK) {
-            printf ("Expected new name: %s, Actual : %s\n",
+            fprintf (stderr, "Expected new name: %s, Actual : %s\n",
                     expected_new_name, actual_result);
             return -1;
         } else {
+            assert (failcount == 1);
             fprintf (stderr, "Expected new name: %s, Actual : %s\n",
                     expected_new_name, actual_result);
-            fprintf (stderr, "%d/%d tests passed\n", (tests_run - failcount), TEST_COUNT);
-            exit (-failcount);
+            fprintf (stderr, "%d/%d tests passed\n", (tests_run - 1), tests_run);
+            exit (-1);
         }
     }
 }
