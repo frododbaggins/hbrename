@@ -2,7 +2,7 @@
 CLIENT_DIR=/home/mohan/.abc
 TARGETS=cleanup runtests
 
-VPATH = common src
+VPATH = common src tests
 all:$(TARGETS)
 cleanup:
 ifeq ($(DEBUG),1)
@@ -11,7 +11,7 @@ else
 	make -C src cleanup
 endif
 
-runtests:
+runtests:tests.c libcleanup.so libtests.so
 ifeq ($(DEBUG),1)
 	make -C tests DEBUG=1 runtests
 else
