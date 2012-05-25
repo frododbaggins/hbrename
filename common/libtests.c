@@ -16,14 +16,15 @@ int check (char * old_name, char * expected_new_name)
     } else {
         failcount++;
         if (check_type == SOFT_CHECK) {
-            printf ("Expected new name: %s, Actual : %s\n",
+            fprintf (stderr, "Expected new name: %s, Actual : %s\n",
                     expected_new_name, actual_result);
             return -1;
         } else {
+            assert (failcount == 1);
             fprintf (stderr, "Expected new name: %s, Actual : %s\n",
                     expected_new_name, actual_result);
-            fprintf (stderr, "%d/%d tests passed\n", (tests_run - failcount), TEST_COUNT);
-            exit (-failcount);
+            fprintf (stderr, "%d/%d tests passed\n", (tests_run - 1), tests_run);
+            exit (-1);
         }
     }
 }
@@ -36,7 +37,7 @@ char names [TEST_COUNT][2][NAMELEN] = { "a-b.c", "a.c",
                                         "aaa-bbb.ext", "aaa.ext",
                                         "a_b_c_d-e.mp4", "a_b_c_d.mp4",
                                         "filename_-rem.mp4", "filename.mp4",
-                                        "a-b-c.mp4", "a.mp4",
+                                        "a-b-c.mp4", "a_b.mp4",
                                         "-name.mp4", "name.mp4",
                                         "__.mp4", "__.mp4",
                                         "____.mp4", "____.mp4",
@@ -47,6 +48,7 @@ char names [TEST_COUNT][2][NAMELEN] = { "a-b.c", "a.c",
 int run_tests(int verbose)
 {
     for (int i = 0 ; i < TEST_COUNT ; i++) {
+        d_printf ("Running test #%d, input name is %s\n", i, names[i][0]);
         check (names[i][0], names [i][1]);
     }
 
