@@ -43,6 +43,42 @@ char *new_name (char *argv_ptr)
         }
         argvptr++;
     }
+
+    /* The section below is intended to remove _only_ the last hyphen and the part
+     * after it, till the period. Any leading hyphens have been removed at this point.
+     * Any remaining hyphens are replaced by underscores
+     */
+    argvptr = saved_argv_ptr;
+    argvptr += strlen (argvptr);
+    char * dotpos = NULL;
+    char * last_hyphen_pos = NULL;
+    while ((argvptr != saved_argv_ptr) && *argvptr != '.') {
+        argvptr --;
+    }
+    if (argvptr == saved_argv_ptr) { /* No period in the input name, return as is */
+        return argv_ptr;
+    }
+    dotpos = argvptr; /* Now look for last hyphen */
+    while ((argvptr != saved_argv_ptr) && *argvptr != '-') {
+        argvptr --;
+    }
+    if (argvptr == saved_argv_ptr) {
+        /* There are no more hyphens in the name.
+         * Thus, we return the original input or our transformed
+         * string (in case leading hyphens were removed)
+         */
+        if (argvptr == argv_ptr) {
+            return argv_ptr;
+        } else {
+            return argvptr;
+        }
+    }
+    last_hyphen_pos = argvptr;
+    for (char * ptr = saved_argv_ptr; ptr < last_hyphen_pos; ptr++) {
+        if (*ptr == '-') {
+            *ptr = '_';
+        }
+    }
     argvptr = saved_argv_ptr;
     strncpy(newname, argvptr, NAMELEN - 1);
 

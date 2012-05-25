@@ -37,7 +37,7 @@ char names [TEST_COUNT][2][NAMELEN] = { "a-b.c", "a.c",
                                         "aaa-bbb.ext", "aaa.ext",
                                         "a_b_c_d-e.mp4", "a_b_c_d.mp4",
                                         "filename_-rem.mp4", "filename.mp4",
-                                        "a-b-c.mp4", "a.mp4",
+                                        "a-b-c.mp4", "a_b.mp4",
                                         "-name.mp4", "name.mp4",
                                         "__.mp4", "__.mp4",
                                         "____.mp4", "____.mp4",
@@ -48,6 +48,7 @@ char names [TEST_COUNT][2][NAMELEN] = { "a-b.c", "a.c",
 int run_tests(int verbose)
 {
     for (int i = 0 ; i < TEST_COUNT ; i++) {
+        d_printf ("Running test #%d, input name is %s\n", i, names[i][0]);
         check (names[i][0], names [i][1]);
     }
 
