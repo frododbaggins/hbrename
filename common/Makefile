@@ -9,7 +9,7 @@ else
 	gcc -c -shared libcleanup.c -std=c99 -o libcleanup.so
 endif
 
-libtests.so:libtests.c libtests.h
+libtests.so:libtests.c libtests.h test-input-data
 ifeq ($(DEBUG),1)
 	gcc -c -shared -ggdb -DDEBUG -std=c99 libtests.c -o libtests.so
 else

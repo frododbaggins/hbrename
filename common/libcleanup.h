@@ -1,5 +1,6 @@
 #ifndef __LIBCLEANUP_H__
 #define __LIBCLEANUP_H__
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
