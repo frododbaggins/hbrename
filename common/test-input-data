@@ -1,3 +1,5 @@
+# This is the test data file
+# Format is <inputname>:<expected new name>
 a-b.c:a.c
 a__b-c.c:a__b.c
 aaa-bbb.ext:aaa.ext
