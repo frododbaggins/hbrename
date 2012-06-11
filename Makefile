@@ -35,6 +35,7 @@ endif
 .PHONY:clean
 clean:
 	-@rm -fvr *~ core* $(TARGETS)
+	-@rm -fv lib*.so
 	make -C src clean
 	make -C common clean
 	make -C tests clean
