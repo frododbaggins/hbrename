@@ -9,7 +9,7 @@
 extern char *newname;		/* From libcleanup.so */
 int main(int argc, char **argv)
 {
-    int opt, quiet;
+    int opt, quiet = 0;
     while ((opt = getopt(argc, argv, "q")) != -1) {
         switch (opt) {
         case 'q':
