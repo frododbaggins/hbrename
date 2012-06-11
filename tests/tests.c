@@ -22,6 +22,9 @@ int main(int argc, char **argv)
                 return -1;
             }
             break;
+        case '?':
+            fprintf (stderr, "Unexpected option found - exiting\n");
+            exit (-1);
         default:
             verbose = 0;
         }

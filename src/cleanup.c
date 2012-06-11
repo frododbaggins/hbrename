@@ -15,6 +15,9 @@ int main(int argc, char **argv)
         case 'q':
             quiet = 1;
             break;
+        case '?':
+            fprintf (stderr, "Unexpected option - exiting\n");
+            exit(0);
         default:
             quiet = 0;
         }
