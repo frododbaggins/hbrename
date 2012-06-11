@@ -18,14 +18,14 @@ else
 	make -C tests runtests
 endif
 
-libcleanup.so:
+libcleanup.so:libcleanup.c libcleanup.h
 ifeq ($(DEBUG),1)
 	make -C common DEBUG=1 libcleanup.so
 else
 	make -C common libcleanup.so
 endif
 
-libtests.so:
+libtests.so:libtests.c libtests.h test-input-data
 ifeq ($(DEBUG),1)
 	make -C common DEBUG=1 libtests.so
 else
@@ -35,6 +35,7 @@ endif
 .PHONY:clean
 clean:
 	-@rm -fvr *~ core* $(TARGETS)
+	-@rm -fv lib*.so
 	make -C src clean
 	make -C common clean
 	make -C tests clean
