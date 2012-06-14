@@ -7,7 +7,7 @@ void set_check_type (int type)
     assert ((type == SOFT_CHECK) || (type == HARD_CHECK));
     check_type = type;
 }
-void check (char * filename)
+int check (char * filename)
 {
     assert (filename);
     FILE * fp = fopen (filename, "r");
@@ -81,11 +81,15 @@ void check (char * filename)
     d_printf ("%d strings found\n", test_count);
     fclose (fp);
     free (line);
+    return test_count;
 }
 
 int run_tests(int verbose)
 {
-    check (TEST_DATA_FILE);
+    int ret = check (TEST_DATA_FILE);
+    if (ret == -1) {
+        fprintf (stderr, "Failed to open test data file\n");
+    }
     if (verbose) {
         printf ("%d/%d tests passed\n", (test_count - failcount), test_count);
     }
