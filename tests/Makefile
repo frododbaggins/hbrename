@@ -8,9 +8,9 @@ all:$(TARGETS)
 #       so that the code can build on systems without it (in DEBUG mode)
 runtests:tests.c libcleanup.so libtests.so
 ifeq ($(DEBUG),1)
-	gcc -ggdb -DDEBUG -lefence tests.c ../common/libcleanup.so ../common/libtests.so -o ../runtests
+	gcc -ggdb -DDEBUG -Wall -Werror -lefence tests.c ../common/libcleanup.so ../common/libtests.so -o ../runtests
 else
-	gcc tests.c ../common/libcleanup.so ../common/libtests.so -o ../runtests
+	gcc -Wall -Werror tests.c ../common/libcleanup.so ../common/libtests.so -o ../runtests
 endif
 
 libcleanup.so:
