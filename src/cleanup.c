@@ -57,9 +57,6 @@ int main(int argc, char **argv)
                     }
 		    if (ret) {
 			perror(strerror(errno));
-			closedir(dir);
-			free(newname);
-			exit(-2);
 		    }
 		} else {
 		    /* File with proposed new name exists.
