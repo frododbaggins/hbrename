@@ -26,7 +26,7 @@ int main(int argc, char **argv)
     const char *execname = "cleanup";
     DIR *dir = opendir(".");
     if (NULL == dir) {
-	perror(strerror(errno));
+	perror("Could not open \".\"");
 	exit(-1);
     }
     d_printf("opened . \n");
@@ -57,7 +57,8 @@ int main(int argc, char **argv)
                         printf ("%s -> %s\n", dirent->d_name, newname);
                     }
 		    if (ret) {
-			perror(strerror(errno));
+			fprintf (stderr, "Error renaming file %s ", dirent->d_name);
+                        perror (NULL);
 			closedir(dir);
 			free(newname);
 			exit(-2);
