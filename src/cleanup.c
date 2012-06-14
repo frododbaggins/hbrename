@@ -37,6 +37,8 @@ int main(int argc, char **argv)
 	closedir(dir);
 	exit(-1);
     }
+    /* Preserve newname pointer for free()ing later */
+    char * newnamebuf = newname;
 
     while (NULL != (dirent = readdir(dir))) {
         if(!strcmp (dirent->d_name, execname)){
@@ -45,16 +47,16 @@ int main(int argc, char **argv)
 	d_printf("file name %s\n", dirent->d_name);
 #ifdef _DIRENT_HAVE_D_TYPE
 	if (dirent->d_type == DT_REG) {
-	    newname = new_name(dirent->d_name);
-	    if (strcmp(newname, dirent->d_name)) {
+	    newnamebuf = new_name(dirent->d_name);
+	    if (strcmp(newnamebuf, dirent->d_name)) {
 		int ret = -1;
 		struct stat statbuf;
 		/* check if file with proposed new name already exists */
-		ret = stat(newname, &statbuf);
+		ret = stat(newnamebuf, &statbuf);
 		if (-1 == ret) {
-		    ret = rename(dirent->d_name, newname);
+		    ret = rename(dirent->d_name, newnamebuf);
                     if (!quiet) {
-                        printf ("%s -> %s\n", dirent->d_name, newname);
+                        printf ("%s -> %s\n", dirent->d_name, newnamebuf);
                     }
 		    if (ret) {
 			fprintf (stderr, "Error renaming file %s ", dirent->d_name);
