@@ -7,9 +7,8 @@ void set_check_type (int type)
     assert ((type == SOFT_CHECK) || (type == HARD_CHECK));
     check_type = type;
 }
-int check (char * filename)
+void check (char * filename)
 {
-    int failcount = 0;
     assert (filename);
     FILE * fp = fopen (filename, "r");
     if (NULL == fp) {
@@ -82,7 +81,6 @@ int check (char * filename)
     d_printf ("%d strings found\n", test_count);
     fclose (fp);
     free (line);
-    return test_count;
 }
 
 int run_tests(int verbose)
