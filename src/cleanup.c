@@ -1,10 +1,4 @@
 #include "../common/libcleanup.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <dirent.h>
-#include <errno.h>
-#include <string.h>
 
 extern char *newname;		/* From libcleanup.so */
 int main(int argc, char **argv)
@@ -55,16 +49,17 @@ int main(int argc, char **argv)
 		ret = stat(newnamebuf, &statbuf);
 		if (-1 == ret) {
 		    ret = rename(dirent->d_name, newnamebuf);
-                    if (!quiet) {
-                        printf ("%s -> %s\n", dirent->d_name, newnamebuf);
-                    }
 		    if (ret) {
 			fprintf (stderr, "Error renaming file %s ", dirent->d_name);
                         perror (NULL);
 			closedir(dir);
 			free(newname);
 			exit(-2);
-		    }
+		    } else {
+                        if (!quiet) {
+                            printf ("%s -> %s\n", dirent->d_name, newnamebuf);
+                        }
+                    }
 		} else {
 		    /* File with proposed new name exists.
 		       Do nothing. */
