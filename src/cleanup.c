@@ -50,16 +50,8 @@ int main(int argc, char **argv)
 		if (-1 == ret) {
 		    ret = rename(dirent->d_name, newnamebuf);
 		    if (ret) {
-			fprintf (stderr, "Error renaming file %s ", dirent->d_name);
-                        perror (NULL);
-			closedir(dir);
-			free(newname);
-			exit(-2);
-		    } else {
-                        if (!quiet) {
-                            printf ("%s -> %s\n", dirent->d_name, newnamebuf);
-                        }
-                    }
+			perror(strerror(errno));
+		    }
 		} else {
 		    /* File with proposed new name exists.
 		       Do nothing. */
