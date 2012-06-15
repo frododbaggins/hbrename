@@ -4,11 +4,13 @@ TARGETS = runtests
 VPATH = ../common
 
 all:$(TARGETS)
+#FIXME: Manage the dependency on Electric Fence better,
+#       so that the code can build on systems without it (in DEBUG mode)
 runtests:tests.c libcleanup.so libtests.so
 ifeq ($(DEBUG),1)
-	gcc -ggdb -DDEBUG tests.c ../common/libcleanup.so ../common/libtests.so -o ../runtests
+	gcc -ggdb -DDEBUG -Wall -Werror -lefence tests.c ../common/libcleanup.so ../common/libtests.so -o ../runtests
 else
-	gcc tests.c ../common/libcleanup.so ../common/libtests.so -o ../runtests
+	gcc -Wall -Werror tests.c ../common/libcleanup.so ../common/libtests.so -o ../runtests
 endif
 
 libcleanup.so:
