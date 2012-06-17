@@ -28,6 +28,7 @@ int main(int argc, char **argv)
         case 's':
             soft_hard = 0;
             break;
+            /* XXX: Shouldn't ``-h'' be for help messages? */
         case 'h':
             soft_hard = 1;
             break;
