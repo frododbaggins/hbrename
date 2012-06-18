@@ -1,6 +1,12 @@
 #include "../common/libcleanup.h"
 
 extern char *newname;		/* From libcleanup.so */
+
+int min (int a, int b)
+{
+    return ((a > b) ? b : a);
+}
+
 int main(int argc, char **argv)
 {
     int opt, quiet = 0;
@@ -33,7 +39,7 @@ int main(int argc, char **argv)
     }
     /* Preserve newname pointer for free()ing later */
     char * newnamebuf = newname;
-
+    char d_name_buf [NAME_MAX];
     while (NULL != (dirent = readdir(dir))) {
         if(!strcmp (dirent->d_name, execname)){
             continue;
@@ -41,7 +47,8 @@ int main(int argc, char **argv)
 	d_printf("file name %s\n", dirent->d_name);
 #ifdef _DIRENT_HAVE_D_TYPE
 	if (dirent->d_type == DT_REG) {
-	    newnamebuf = new_name(dirent->d_name);
+            strncpy (d_name_buf, dirent->d_name, min (NAMELEN, NAME_MAX));
+	    newnamebuf = new_name(d_name_buf);
 	    if (strcmp(newnamebuf, dirent->d_name)) {
 		int ret = -1;
 		struct stat statbuf;
