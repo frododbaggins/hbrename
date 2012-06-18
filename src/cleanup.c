@@ -59,13 +59,14 @@ int main(int argc, char **argv)
 		ret = stat(newnamebuf, &statbuf);
 		if (-1 == ret) {
 		    ret = rename(dirent->d_name, newnamebuf);
-                    if (!quiet) {
-                        printf ("%s -> %s\n", dirent->d_name, newnamebuf);
-                    }
 		    if (ret) {
 			perror(strerror(errno));
-		    }
-		} else {
+		    } else {
+                        if (!quiet) {
+                            printf ("%s -> %s\n", dirent->d_name, newnamebuf);
+                        }
+                    }
+                } else {
 		    /* File with proposed new name exists.
 		       Do nothing. */
 		}
