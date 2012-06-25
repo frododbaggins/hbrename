@@ -5,7 +5,7 @@ int main(int argc, char **argv)
 {
     int opt, verbose = 0, cmdcheck = 0,soft_hard = 0;
     char *cmdarg;
-    while ((opt = getopt(argc, argv, "shvc:")) != -1) {
+    while ((opt = getopt(argc, argv, "s:hvc:")) != -1) {
         switch (opt) {
         case 'v':
             verbose = 1;
@@ -26,11 +26,20 @@ int main(int argc, char **argv)
             fprintf (stderr, "Unexpected option found - exiting\n");
             exit (-1);
         case 's':
-            soft_hard = 0;
+            soft_hard = atoi(optarg);
+            if ((soft_hard != 0) && (soft_hard != 1)) {
+                d_printf ("Obtained value = %d for soft_hard, setting to default (0)\n", soft_hard);
+                soft_hard = 0; /* SOFT_CHECK is the default type */
+            }
             break;
-            /* XXX: Shouldn't ``-h'' be for help messages? */
         case 'h':
-            soft_hard = 1;
+            fprintf (stderr, "%s [-s -h -v -c] \n", argv [0]);
+            fprintf (stderr, "\t-s : Enables soft checking. This means that errors\
+                                   \n\t     do not halt a test and thus testing can continue.\n");
+            fprintf (stderr,
+                     "\t-v : Verbose mode\n \t-c : Tests a name given on the command line and returns the new name.\n");
+            fprintf (stderr, "\t-h : Prints this message\n");
+            exit (0);
             break;
         default:
             verbose = 0;
