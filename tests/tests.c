@@ -4,8 +4,9 @@ extern char *newname;          /* From libcleanup.so */
 int main(int argc, char **argv)
 {
     int opt, verbose = 0, cmdcheck = 0,soft_hard = 0;
+    int tool_test = 0;
     char *cmdarg;
-    while ((opt = getopt(argc, argv, "s:hvc:")) != -1) {
+    while ((opt = getopt(argc, argv, "ts:hvc:")) != -1) {
         switch (opt) {
         case 'v':
             verbose = 1;
@@ -41,6 +42,9 @@ int main(int argc, char **argv)
             fprintf (stderr, "\t-h : Prints this message\n");
             exit (0);
             break;
+        case 't':
+            tool_test = 1;
+            break;
         default:
             verbose = 0;
         }
@@ -54,7 +58,12 @@ int main(int argc, char **argv)
         return 0;
     }
     set_check_type (soft_hard);
-    int tests_status = run_tests(verbose);
+    int tests_status;
+    if (tool_test) {
+        tests_status = test_tool (verbose);
+    } else {
+        tests_status = run_tests(verbose);
+    }
     free(newname);
     return tests_status;
 }

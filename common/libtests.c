@@ -6,12 +6,6 @@ typedef int bool;
 #define FALSE 0
 
 int test_count = 0, failcount = 0, check_type = 0;
-struct test_data_bufs
-{
-    char buf_old [NAMELEN],
-         buf_exp [NAMELEN];
-};
-struct test_data_bufs bufs;
 
 void set_check_type (int type)
 {
@@ -121,5 +115,54 @@ int run_tests(int verbose)
     if (verbose) {
         printf ("%d/%d tests passed\n", (test_count - failcount), test_count);
     }
+    return -failcount;
+}
+
+int test_tool (int verbose)
+{
+    FILE * fp = fopen (TEST_DATA_FILE, "r");
+    if (NULL == fp) {
+        return -1;
+    }
+    bool ret;
+    char cmd [NAMELEN + 8]; /* 8 is strlen ("touch ./") */
+    if (-1 == mkdir ("test-dir", 0755)) {
+        fclose (fp);
+        perror ("Could not create test temporary directory");
+        return -1;
+    }
+    if (-1 == chdir ("test-dir")) {
+        perror ("Could not change to test temporary directory");
+        fclose (fp);
+        system ("rm -rf test-dir");
+        return -1;
+    }
+
+    while (((ret = get_single_entry (fp)) == TRUE) || (ret == IGNORE)) {
+        if (bufs.buf_old [0] == '#') {
+            /* Ignore comment line */
+            continue;
+        }
+        test_count ++;
+        sprintf (cmd, "touch ./");
+        strcat (cmd, bufs.buf_old);
+        strcat (cmd, "\0");
+        d_printf ("buf_old = [%s] buf_exp = [%s]\n", bufs.buf_old, bufs.buf_exp);
+        d_printf (cmd);
+        /* FIXME: Use of system() looks shabby, perhaps undeservedly so */
+        system (cmd);
+        system ("../cleanup -q");
+        struct stat statbuf;
+        if (-1 == stat (bufs.buf_exp, &statbuf)) {
+            failcount++;
+            d_printf ("Did not find expected file with new name %s\n", bufs.buf_exp);
+        }
+    }
+    if (verbose) {
+        printf ("%d/%d tests passed\n", (test_count - failcount), test_count);
+    }
+    chdir ("..");
+    system ("rm -r test-dir");
+    fclose (fp);
     return -failcount;
 }
