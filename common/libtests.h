@@ -15,7 +15,7 @@ struct test_data_bufs
 };
 struct test_data_bufs bufs;
 
-int test_tool (int verbose);
-int run_tests(int verbose);
+int test_cleanup_tool (int verbose);
+int test_libcleanup (int verbose);
 void set_check_type (int);
 #endif

@@ -60,9 +60,9 @@ int main(int argc, char **argv)
     set_check_type (soft_hard);
     int tests_status;
     if (tool_test) {
-        tests_status = test_tool (verbose);
+        tests_status = test_cleanup_tool (verbose);
     } else {
-        tests_status = run_tests(verbose);
+        tests_status = test_libcleanup (verbose);
     }
     free(newname);
     return tests_status;

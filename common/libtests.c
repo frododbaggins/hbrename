@@ -106,7 +106,7 @@ int check (char * filename)
     return test_count;
 }
 
-int run_tests(int verbose)
+int test_libcleanup (int verbose)
 {
     int ret = check (TEST_DATA_FILE);
     if (ret == -1) {
@@ -118,7 +118,7 @@ int run_tests(int verbose)
     return -failcount;
 }
 
-int test_tool (int verbose)
+int test_cleanup_tool (int verbose)
 {
     FILE * fp = fopen (TEST_DATA_FILE, "r");
     if (NULL == fp) {
