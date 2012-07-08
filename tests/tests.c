@@ -13,7 +13,7 @@ int main(int argc, char **argv)
             break;
         case 'c':
             if(strcmp(optarg, "")) {
-                // truncate to NAMELEN (80) chars when computing new name
+                // truncate to NAMELEN (255) chars when computing new name
                     cmdarg = malloc(NAMELEN);
                     strncpy(cmdarg, optarg, NAMELEN-1);
                     strcat(cmdarg,"\0");
