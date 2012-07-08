@@ -34,12 +34,14 @@ int main(int argc, char **argv)
             }
             break;
         case 'h':
-            fprintf (stderr, "%s [-s -h -v -c] \n", argv [0]);
+            fprintf (stderr, "%s [-s -h -v -c -t] \n", argv [0]);
             fprintf (stderr, "\t-s : Enables soft checking. This means that errors\
                                    \n\t     do not halt a test and thus testing can continue.\n");
             fprintf (stderr,
                      "\t-v : Verbose mode\n \t-c : Tests a name given on the command line and returns the new name.\n");
-            fprintf (stderr, "\t-h : Prints this message\n");
+            fprintf (stderr, "\t-h : Prints this message.\n");
+            fprintf (stderr, "\t-t : Tests the cleanup tool separately as an independent executable.\n");
+            fprintf (stderr, "\t     Without this option, the libcleanup API is tested.\n");
             exit (0);
             break;
         case 't':
