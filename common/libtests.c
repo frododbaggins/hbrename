@@ -70,7 +70,7 @@ int check (char * filename)
     assert (filename);
     FILE * fp = fopen (filename, "r");
     if (NULL == fp) {
-        return -1;
+        return FILE_NOT_FOUND_ERR;
     }
     bool ret;
     while (((ret = get_single_entry (fp)) == TRUE) || (ret == IGNORE)) {
@@ -109,7 +109,7 @@ int check (char * filename)
 int test_libcleanup (int verbose)
 {
     int ret = check (TEST_DATA_FILE);
-    if (ret == -1) {
+    if (ret == FILE_NOT_FOUND_ERR) {
         fprintf (stderr, "Failed to open test data file\n");
     }
     if (verbose) {

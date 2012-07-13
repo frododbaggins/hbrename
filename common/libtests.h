@@ -7,6 +7,7 @@ extern char *newname;		/* From libcleanup.so */
 #define SOFT_CHECK 0
 #define HARD_CHECK 1
 #define TEST_DATA_FILE "common/test-input-data"
+#define FILE_NOT_FOUND_ERR 1
 
 struct test_data_bufs
 {
