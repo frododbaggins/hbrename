@@ -13,7 +13,7 @@ int main(int argc, char **argv)
             break;
         case 'c':
             if(strcmp(optarg, "")) {
-                // truncate to NAMELEN (80) chars when computing new name
+                // truncate to NAMELEN (255) chars when computing new name
                     cmdarg = malloc(NAMELEN);
                     strncpy(cmdarg, optarg, NAMELEN-1);
                     strcat(cmdarg,"\0");
@@ -34,12 +34,14 @@ int main(int argc, char **argv)
             }
             break;
         case 'h':
-            fprintf (stderr, "%s [-s -h -v -c] \n", argv [0]);
+            fprintf (stderr, "%s [-s -h -v -c -t] \n", argv [0]);
             fprintf (stderr, "\t-s : Enables soft checking. This means that errors\
                                    \n\t     do not halt a test and thus testing can continue.\n");
             fprintf (stderr,
                      "\t-v : Verbose mode\n \t-c : Tests a name given on the command line and returns the new name.\n");
-            fprintf (stderr, "\t-h : Prints this message\n");
+            fprintf (stderr, "\t-h : Prints this message.\n");
+            fprintf (stderr, "\t-t : Tests the cleanup tool separately as an independent executable.\n");
+            fprintf (stderr, "\t     Without this option, the libcleanup API is tested.\n");
             exit (0);
             break;
         case 't':
@@ -60,9 +62,9 @@ int main(int argc, char **argv)
     set_check_type (soft_hard);
     int tests_status;
     if (tool_test) {
-        tests_status = test_tool (verbose);
+        tests_status = test_cleanup_tool (verbose);
     } else {
-        tests_status = run_tests(verbose);
+        tests_status = test_libcleanup (verbose);
     }
     free(newname);
     return tests_status;

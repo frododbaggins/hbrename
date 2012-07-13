@@ -70,7 +70,7 @@ int check (char * filename)
     assert (filename);
     FILE * fp = fopen (filename, "r");
     if (NULL == fp) {
-        return -1;
+        return FILE_NOT_FOUND_ERR;
     }
     bool ret;
     while (((ret = get_single_entry (fp)) == TRUE) || (ret == IGNORE)) {
@@ -91,7 +91,6 @@ int check (char * filename)
             if (check_type == SOFT_CHECK) {
                 fprintf (stderr, "Expected new name: [%s], Actual : [%s]\n",
                          bufs.buf_exp, actual_result);
-                return -1;
             } else {
                 assert (failcount == 1);
                 fprintf (stderr, "Expected new name: %s, Actual : %s\n",
@@ -106,10 +105,10 @@ int check (char * filename)
     return test_count;
 }
 
-int run_tests(int verbose)
+int test_libcleanup (int verbose)
 {
     int ret = check (TEST_DATA_FILE);
-    if (ret == -1) {
+    if (ret == FILE_NOT_FOUND_ERR) {
         fprintf (stderr, "Failed to open test data file\n");
     }
     if (verbose) {
@@ -118,7 +117,7 @@ int run_tests(int verbose)
     return -failcount;
 }
 
-int test_tool (int verbose)
+int test_cleanup_tool (int verbose)
 {
     FILE * fp = fopen (TEST_DATA_FILE, "r");
     if (NULL == fp) {
@@ -156,6 +155,11 @@ int test_tool (int verbose)
         if (-1 == stat (bufs.buf_exp, &statbuf)) {
             failcount++;
             d_printf ("Did not find expected file with new name %s\n", bufs.buf_exp);
+            if (check_type == HARD_CHECK) {
+                break;
+            } else {
+                /* continue */
+            }
         }
     }
     if (verbose) {
