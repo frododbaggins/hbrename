@@ -155,6 +155,11 @@ int test_cleanup_tool (int verbose)
         if (-1 == stat (bufs.buf_exp, &statbuf)) {
             failcount++;
             d_printf ("Did not find expected file with new name %s\n", bufs.buf_exp);
+            if (check_type == HARD_CHECK) {
+                break;
+            } else {
+                /* continue */
+            }
         }
     }
     if (verbose) {
