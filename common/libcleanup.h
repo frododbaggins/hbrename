@@ -13,7 +13,7 @@
 #include <dirent.h>
 #include <errno.h>
 
-#define NAMELEN 80
+#define NAMELEN 255
 char *new_name(char *argv_ptr);
 int d_printf(const char *fmt, ...);
 #endif
