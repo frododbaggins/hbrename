@@ -82,15 +82,22 @@ char *new_name (char *argv_ptr)
     argvptr = saved_argv_ptr;
     strncpy(newname, argvptr, NAMELEN - 1);
 
+    /* Copy characters until a hyphen is encountered */
     while (*argvptr && *argvptr != '-') {
         /* This set of conditions is to pass the test of
          * a_-_b.c. This example is seen often.
          */
-        if ((*argvptr == '_')
-            && (*(argvptr+1) == '-')
-            && (*(argvptr+2) == '_')) {
-            argvptr += 2;
-            continue;
+        if (*argvptr == '_') {
+            if (*(argvptr+1) == '-'
+                && *(argvptr+2) == '_') {
+                    argvptr += 2;
+                    continue;
+            } else {
+                /* trim consecutive underscores */
+                while (*(argvptr+1) == '_') {
+                    argvptr++;
+                }
+            }
         }
         *newnameptr++ = *argvptr++;
     }
