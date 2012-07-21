@@ -1,16 +1,27 @@
 #include "libtests.h"
 
-typedef int bool;
-#define IGNORE 2
-#define TRUE 1
-#define FALSE 0
-
 int test_count = 0, failcount = 0, check_type = 0;
 
 void set_check_type (int type)
 {
     assert ((type == SOFT_CHECK) || (type == HARD_CHECK));
     check_type = type;
+}
+
+bool is_well_formatted (char * line)
+{
+    regex_t regex;
+    size_t s = 0;
+    regmatch_t * r = NULL;
+    if (regcomp (&regex, "[:alnum:]*:[:alnum:]*", REG_NEWLINE|REG_NOSUB)) {
+        /* Compilation failed, let us return success */
+        return TRUE;
+    }
+    if (regexec (&regex, line, s, r, 0)) {
+        return FALSE;
+    } else {
+        return TRUE;
+    }
 }
 
 bool get_single_entry (FILE * fp)
@@ -27,6 +38,10 @@ bool get_single_entry (FILE * fp)
 
         if (*line == '#') {
             /* Ignore comment lines */
+            bufs.buf_old[0] = '#';
+            return IGNORE;
+        }
+        if ( !is_well_formatted (line) ) {
             bufs.buf_old[0] = '#';
             return IGNORE;
         }
