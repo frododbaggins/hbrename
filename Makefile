@@ -1,5 +1,4 @@
 #!/bin/bash
-CLIENT_DIR=/home/mohan/.abc
 TARGETS=cleanup runtests
 
 VPATH = common src tests
@@ -42,6 +41,3 @@ clean:
 .PHONY: rebuild
 rebuild:
 	make clean all
-.PHONY:release
-release:cleanup
-	-@cp -fv cleanup $(CLIENT_DIR)/.cleanup
