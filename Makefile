@@ -3,7 +3,7 @@ TARGETS=cleanup runtests
 
 VPATH = common src tests
 all:$(TARGETS)
-cleanup:
+cleanup:libcleanup.so cleanup.c
 ifeq ($(DEBUG),1)
 	make -C src DEBUG=1 cleanup
 else
