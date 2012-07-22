@@ -24,7 +24,7 @@ else
 	make -C common libcleanup.so
 endif
 
-libtests.so:libtests.c libtests.h test-input-data
+libtests.so:libtests.c libtests.h
 ifeq ($(DEBUG),1)
 	make -C common DEBUG=1 libtests.so
 else
