@@ -66,6 +66,11 @@ int main(int argc, char **argv)
                 } else {
 		    /* File with proposed new name exists.
 		       Do nothing. */
+                    if (!quiet) {
+                        fprintf (stderr,
+                                 "Renaming %s would overwrite file %s. Hence, leaving it unaltered.\n",
+                                 dirent->d_name, newnamebuf);
+                    }
 		}
 	    }
 	}
