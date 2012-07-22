@@ -34,6 +34,3 @@ clean:
 .PHONY: rebuild
 rebuild:
 	make clean all
-.PHONY:release
-release:cleanup
-	-@cp -fv cleanup $(CLIENT_DIR)/.cleanup
