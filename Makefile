@@ -1,10 +1,9 @@
 #!/bin/bash
-CLIENT_DIR=/home/mohan/.abc
 TARGETS=cleanup runtests
 
 VPATH = common src tests
 all:$(TARGETS)
-cleanup:
+cleanup:libcleanup.so cleanup.c
 ifeq ($(DEBUG),1)
 	make -C src DEBUG=1 cleanup
 else
@@ -42,6 +41,3 @@ clean:
 .PHONY: rebuild
 rebuild:
 	make clean all
-.PHONY:release
-release:cleanup
-	-@cp -fv cleanup $(CLIENT_DIR)/.cleanup

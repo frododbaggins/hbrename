@@ -11,7 +11,7 @@ else
 	gcc -c -Wall -Werror -shared libcleanup.c -std=c99 -o libcleanup.so
 endif
 
-libtests.so:libtests.c libtests.h test-input-data
+libtests.so:libtests.c libtests.h
 ifeq ($(DEBUG),1)
 	gcc -c -Wall -Werror -shared -ggdb -DDEBUG -std=c99 -lefence libtests.c -o libtests.so
 else

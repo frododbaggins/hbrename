@@ -1,5 +1,4 @@
 #!/bin/bash
-CLIENT_DIR=/home/mohan/.abc
 TARGETS = runtests
 VPATH = ../common
 
@@ -13,9 +12,9 @@ else
 	gcc -Wall -Werror tests.c ../common/libcleanup.so ../common/libtests.so -o ../runtests
 endif
 
-libcleanup.so:
+libcleanup.so:libcleanup.c libcleanup.h
 	make -C ../common libcleanup.so
-libtests.so:
+libtests.so:libtests.c libtests.h
 	make -C ../common libtests.so
 
 .PHONY:clean
@@ -24,6 +23,3 @@ clean:
 .PHONY: rebuild
 rebuild:
 	make clean all
-.PHONY:release
-release:cleanup
-	-@cp -fv cleanup $(CLIENT_DIR)/.cleanup
