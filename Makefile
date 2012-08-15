@@ -1,5 +1,5 @@
 #!/bin/bash
-TARGETS=cleanup runtests
+TARGETS=cleanup runtests cscope
 
 VPATH = common src tests
 all:$(TARGETS)
@@ -31,13 +31,23 @@ else
 	make -C common libtests.so
 endif
 
+cscope:cscope.out
+cscope.out:cscope.files
+	@cscope -b -q -v -k < cscope.files
+# If any C source or header files are changed, we have to recreate cscope.files
+cscope.files:$(shell find -name "*.[ch]")
+	@echo -n "[CSCOPE] "
+	@find -name "*.[ch]" > $@
 .PHONY:clean
 clean:
 	-@rm -fvr *~ core* $(TARGETS)
-	-@rm -fv lib*.so
+	-@rm -fv lib*.so cscope.*
 	make -C src clean
 	make -C common clean
 	make -C tests clean
+.PHONY:cscopeclean
+cscopeclean:
+	-@rm -fv cscope.*
 .PHONY: rebuild
 rebuild:
-	make clean all
+	make clean all cscope
