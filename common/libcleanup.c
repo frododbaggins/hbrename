@@ -50,7 +50,6 @@ char *new_name (char *argv_ptr)
      */
     argvptr = saved_argv_ptr;
     argvptr += strlen (argvptr);
-    char * dotpos = NULL;
     char * last_hyphen_pos = NULL;
     while ((argvptr != saved_argv_ptr) && *argvptr != '.') {
         argvptr --;
@@ -58,7 +57,7 @@ char *new_name (char *argv_ptr)
     if (argvptr == saved_argv_ptr) { /* No period in the input name, return as is */
         return argv_ptr;
     }
-    dotpos = argvptr; /* Now look for last hyphen */
+    /* Now look for last hyphen */
     while ((argvptr != saved_argv_ptr) && *argvptr != '-') {
         argvptr --;
     }
