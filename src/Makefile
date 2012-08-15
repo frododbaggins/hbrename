@@ -1,5 +1,4 @@
 #!/bin/bash
-CLIENT_DIR=/home/mohan/.abc
 TARGETS=cleanup runtests
 
 VPATH = ../common
