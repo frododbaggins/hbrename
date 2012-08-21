@@ -1,11 +1,14 @@
 #include "../common/libtests.h"
 extern char *newname;          /* From libcleanup.so */
+extern int EF_ALLOW_MALLOC_0;
 
 int main(int argc, char **argv)
 {
     int opt, verbose = 0, cmdcheck = 0,soft_hard = 0;
     int tool_test = 0;
     char *cmdarg;
+
+    EF_ALLOW_MALLOC_0 = 1;
     while ((opt = getopt(argc, argv, "ts:hvc:")) != -1) {
         switch (opt) {
         case 'v':

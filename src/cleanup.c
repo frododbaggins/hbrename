@@ -1,6 +1,7 @@
 #include "../common/libcleanup.h"
 
 extern char *newname;		/* From libcleanup.so */
+extern int EF_DISABLE_BANNER;
 
 int min (int a, int b)
 {
@@ -10,6 +11,7 @@ int min (int a, int b)
 int main(int argc, char **argv)
 {
     int opt, quiet = 0;
+    EF_DISABLE_BANNER = 1;
     while ((opt = getopt(argc, argv, "q")) != -1) {
         switch (opt) {
         case 'q':
@@ -66,6 +68,11 @@ int main(int argc, char **argv)
                 } else {
 		    /* File with proposed new name exists.
 		       Do nothing. */
+                    if (!quiet) {
+                        fprintf (stderr,
+                                 "Renaming %s would overwrite file %s. Hence, leaving it unaltered.\n",
+                                 dirent->d_name, newnamebuf);
+                    }
 		}
 	    }
 	}
