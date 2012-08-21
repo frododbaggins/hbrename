@@ -5,3 +5,4 @@ libcleanup.so
 libtests.so
 core*
 \#*
+cscope.*
