@@ -1,8 +1,5 @@
 #include "../common/libtests.h"
 extern char *newname;          /* From libcleanup.so */
-#ifdef DEBUG
-extern int EF_ALLOW_MALLOC_0;
-#endif
 
 int main(int argc, char **argv)
 {
@@ -10,7 +7,8 @@ int main(int argc, char **argv)
     int tool_test = 0;
     char *cmdarg;
 #ifdef DEBUG
-    EF_ALLOW_MALLOC_0 = 0;
+    EF_ALLOW_MALLOC_0 = 1;
+    EF_DISABLE_BANNER = 1;
 #endif
     while ((opt = getopt(argc, argv, "ts:hvc:")) != -1) {
         switch (opt) {

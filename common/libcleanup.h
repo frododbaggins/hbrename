@@ -14,6 +14,10 @@
 #include <errno.h>
 
 #define NAMELEN 255
+#ifdef DEBUG
+extern int EF_DISABLE_BANNER;
+#endif
+
 char *new_name(char *argv_ptr);
 int d_printf(const char *fmt, ...);
 #endif

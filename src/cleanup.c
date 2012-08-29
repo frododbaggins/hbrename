@@ -1,9 +1,6 @@
 #include "../common/libcleanup.h"
 
 extern char *newname;		/* From libcleanup.so */
-#ifdef DEBUG
-extern int EF_DISABLE_BANNER;
-#endif
 
 int min (int a, int b)
 {

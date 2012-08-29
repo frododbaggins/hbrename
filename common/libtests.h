@@ -15,6 +15,10 @@ extern char *newname;		/* From libcleanup.so */
 #define IGNORE 2
 typedef int bool;
 
+#ifdef DEBUG
+extern int EF_ALLOW_MALLOC_0;
+#endif
+
 struct test_data_bufs
 {
     char buf_old [NAMELEN],
