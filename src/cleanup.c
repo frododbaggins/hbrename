@@ -9,14 +9,17 @@ int min (int a, int b)
 
 int main(int argc, char **argv)
 {
-    int opt, quiet = 0;
+    int opt, quiet = 0, no_action=0;
 #ifdef DEBUG
     EF_DISABLE_BANNER = 1;
 #endif
-    while ((opt = getopt(argc, argv, "q")) != -1) {
+    while ((opt = getopt(argc, argv, "qn")) != -1) {
         switch (opt) {
         case 'q':
             quiet = 1;
+            break;
+        case 'n':
+            no_action = 1;
             break;
         case '?':
             fprintf (stderr, "Unexpected option - exiting\n");
@@ -57,8 +60,12 @@ int main(int argc, char **argv)
 		struct stat statbuf;
 		/* check if file with proposed new name already exists */
 		ret = stat(newnamebuf, &statbuf);
-		if (-1 == ret) {
-		    ret = rename(dirent->d_name, newnamebuf);
+		if (-1 == ret){
+                    if (!no_action) {
+                        ret = rename(dirent->d_name, newnamebuf);
+                    } else {
+                        ret = 0;
+                    }
 		    if (ret) {
 			perror(strerror(errno));
 		    } else {
